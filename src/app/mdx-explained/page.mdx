@@ -1,0 +1,232 @@
+---
+title: "MDX Pipeline Explained"
+description: "A comprehensive breakdown of how MDX integrates with Next.js App Router"
+---
+
+# MDX Pipeline Explained
+
+This page documents our journey learning MDX in Next.js and explains the complete pipeline from development to production.
+
+## What is MDX?
+
+MDX is a **superset of Markdown** that allows you to write **JSX directly** in your markdown files. It combines:
+
+- 📝 **Markdown**: For content and formatting
+- ⚛️ **React/JSX**: For interactive components
+- 🎨 **Custom Components**: For enhanced functionality
+
+## The MDX Development Pipeline
+
+### Development Mode (`npm run dev`)
+
+```
+1. Source File (page.mdx)
+   ↓
+2. File Watcher (Next.js dev server)
+   ↓
+3. MDX Loader (@mdx-js/loader)
+   ↓
+4. MDX → JSX Transformation
+   ↓
+5. Component Injection (useMDXComponents)
+   ↓
+6. JSX → JavaScript (Turbopack/Webpack)
+   ↓
+7. Hot Module Replacement (HMR)
+   ↓
+8. Browser Rendering
+```
+
+**Key Development Features:**
+
+- ✅ **Hot Reload**: Changes reflect instantly
+- ✅ **Error Overlay**: Real-time error feedback
+- ✅ **Fast Refresh**: Component state preservation
+
+### Production Build (`npm run build`)
+
+```
+1. Source File (page.mdx)
+   ↓
+2. Static Analysis & Tree Shaking
+   ↓
+3. MDX Compilation (@next/mdx)
+   ↓
+4. Component Resolution (mdx-components.tsx)
+   ↓
+5. Bundle Optimization
+   ↓
+6. Static Generation (if applicable)
+   ↓
+7. Optimized JavaScript Bundles
+   ↓
+8. Deployment Ready Assets
+```
+
+**Production Optimizations:**
+
+- 🚀 **Bundle Splitting**: Smaller chunks for faster loading
+- 📦 **Tree Shaking**: Remove unused code
+- 🗜️ **Minification**: Compressed JavaScript
+- 📊 **Static Generation**: Pre-rendered HTML when possible
+
+## Regular Next.js vs MDX Pipeline Comparison
+
+### Regular Page Component (page.tsx)
+
+```typescript
+// src/app/about/page.tsx
+export default function About() {
+  return (
+    <div>
+      <h1>About Us</h1>
+      <p>This is a regular React component.</p>
+    </div>
+  );
+}
+```
+
+**Pipeline:**
+
+```
+TypeScript → JSX → JavaScript → Bundle
+```
+
+### MDX Page (page.mdx)
+
+```mdx
+---
+title: "About Us"
+---
+
+# About Us
+
+This is **MDX** with <span style={{ color: 'blue' }}>JSX</span> mixed in!
+
+<CustomComponent prop="value" />
+```
+
+**Pipeline:**
+
+```
+MDX → JSX → Component Mapping → JavaScript → Bundle
+```
+
+## Required Files for MDX Integration
+
+### 1. `next.config.ts` - Configuration
+
+```typescript
+import createMDX from "@next/mdx";
+
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+});
+
+const nextConfig = {
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+};
+
+export default withMDX(nextConfig);
+```
+
+### 2. `src/mdx-components.tsx` - Component Mapping
+
+```typescript
+import type { MDXComponents } from "mdx/types";
+
+export function useMDXComponents(components = {}): MDXComponents {
+  return {
+    // Custom component mappings go here
+    ...components,
+  };
+}
+```
+
+### 3. `package.json` - Dependencies
+
+```json
+{
+  "dependencies": {
+    "@mdx-js/loader": "^3.1.1",
+    "@next/mdx": "^15.5.2",
+    "@mdx-js/react": "^3.1.1",
+    "@types/mdx": "^2.0.13"
+  }
+}
+```
+
+## File Structure for MDX Pages
+
+```
+src/app/
+├── mdx-explained/
+│   └── page.mdx          # /mdx-explained route
+├── mdx-example/
+│   ├── page.mdx          # /mdx-example route
+│   └── layout.tsx        # Optional layout wrapper
+├── layout.tsx            # Root layout
+└── page.tsx              # / (home) route
+
+src/
+└── mdx-components.tsx    # Required for MDX component mapping
+```
+
+## Key Learning Points
+
+### 1. **File Convention Matters**
+
+- ❌ `src/app/hello.mdx` → No route created
+- ✅ `src/app/hello/page.mdx` → Creates `/hello` route
+
+### 2. **Server vs Client Components**
+
+- MDX pages are **Server Components** by default
+- Custom components can be Server or Client as needed
+- Use `"use client"` only when you need interactivity
+
+### 3. **Automatic Integration**
+
+- Next.js **automatically** finds and uses `mdx-components.tsx`
+- No manual imports needed for the components file
+- Component mappings are injected during compilation
+
+### 4. **Development vs Production**
+
+- **Dev**: Fast compilation with Turbopack, instant feedback
+- **Production**: Optimized bundles, static generation where possible
+
+## Common Pitfalls We Encountered
+
+1. **Missing `mdx-components.tsx`**: Results in Context errors
+2. **Wrong file structure**: `.mdx` files need to be `page.mdx` in folders
+3. **Server/Client mismatch**: Adding `"use client"` unnecessarily
+4. **TypeScript errors**: Missing `@types/mdx` package
+
+## Performance Implications
+
+### Development
+
+- **CPU**: ~2-5% idle, ~15-25% during changes
+- **RAM**: ~200-400MB for small projects
+- **Hot Reload**: ~1-2 seconds for MDX changes
+
+### Production
+
+- **Bundle Size**: MDX adds minimal overhead (~10-20KB)
+- **Runtime**: Server Components = faster initial load
+- **SEO**: Excellent (pre-rendered HTML)
+
+## Next Steps for Learning
+
+1. **Add Custom Components**: Create reusable MDX components
+2. **Syntax Highlighting**: Integrate Shiki or Prism for code blocks
+3. **Frontmatter Processing**: Extract metadata for page headers
+4. **Table of Contents**: Auto-generate navigation from headings
+5. **Remark/Rehype Plugins**: Extend markdown processing
+
+## Conclusion
+
+MDX in Next.js provides a powerful way to create content-rich applications by combining the simplicity of Markdown with the power of React. The integration is seamless once you understand the file conventions and pipeline flow.
+
+The key insight: **MDX is not just Markdown with JSX** - it's a complete compilation pipeline that transforms content into optimized React components at build time.
