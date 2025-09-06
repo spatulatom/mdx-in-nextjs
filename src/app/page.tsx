@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import SearchInput from "@/components/SearchInput";
 
 export default function Home() {
   return (
@@ -13,6 +14,19 @@ export default function Home() {
           height={38}
           priority
         />
+
+        {/* Search Input Component */}
+        <div className="w-full max-w-md">
+          <h2 className="text-xl font-semibold text-gray-500 mb-4 text-center sm:text-left">
+            Try the Search with Autocomplete
+          </h2>
+          <SearchInput />
+          <p className="text-sm text-gray-500 mt-2 text-center sm:text-left">
+            Start typing to see autocomplete suggestions. Click on any
+            suggestion to navigate to a dynamic page.
+          </p>
+        </div>
+
         <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
           <li>
             <Link href="/mdx-explained">MDX in Next.js</Link>
