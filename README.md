@@ -1,36 +1,46 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Features Implemented
 
-First, run the development server:
+This project demonstrates modern Next.js App Router features and MDX integration. Here's what has been implemented (in order of addition):
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Project Setup**
+   - Next.js 15 with App Router
+   - TypeScript configuration
+   - TailwindCSS integration
+   - Turbopack for faster builds
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **MDX Integration**
+   - Setup with `@next/mdx` and `@mdx-js/loader`
+   - Custom MDX components configuration
+   - Support for both `.md` and `.mdx` file extensions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Basic MDX Pages**
+   - `/mdx-example` - A simple MDX demonstration page
+   - `/mdx-explained` - Comprehensive documentation on MDX pipeline
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **Advanced Routing Patterns**
+   - Dynamic routes with `/photos/[id]`
+   - Search functionality with `/search/[query]`
 
-## Learn More
+5. **Parallel Routes**
+   - Dashboard with parallel sections using `@analytics` and `@team` slots
+   - Admin section with `@admin` and `@user` slots
+   - Independent loading and rendering of each section
 
-To learn more about Next.js, take a look at the following resources:
+6. **Intercepted Routes**
+   - Modal implementation via route interception
+   - Photos modal via `@modal/(.)([id])/page.tsx`
+   - Maintains parent route context while showing modal overlay
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+7. **Client Components**
+   - Modal component with keyboard handlers
+   - Search input with navigation functionality
+   - Autocomplete suggestions for search input
+     - Real-time filtering as user types
+     - Keyboard navigation (arrow keys, enter, escape)
+     - Click selection of suggestions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+8. **Slot-Based UI Architecture**
+   - Default slot fallbacks
+   - Nested parallel routes for complex UI structures
