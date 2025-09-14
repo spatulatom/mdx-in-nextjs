@@ -27,6 +27,10 @@ This project demonstrates modern Next.js App Router features and MDX integration
    - Dashboard with parallel sections using `@analytics` and `@team` slots
    - Admin section with `@admin` and `@user` slots
    - Independent loading and rendering of each section
+   - Synchronized URL-based rendering across slots:
+     - Navigating to `/dashboard/settings` renders both the main settings page AND the team settings page (`@team/settings`)
+     - This demonstrates how parallel routes respond to the same URL patterns
+     - Slots without matching routes show their default content (fallback)
 
 6. **Intercepted Routes**
    - Modal implementation via route interception
