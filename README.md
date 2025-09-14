@@ -31,13 +31,19 @@ This project demonstrates modern Next.js App Router features and MDX integration
      - Navigating to `/dashboard/settings` renders both the main settings page AND the team settings page (`@team/settings`)
      - This demonstrates how parallel routes respond to the same URL patterns
      - Slots without matching routes show their default content (fallback)
+       - Note: While this example uses static routes, the true power of parallel routes becomes evident when combined with server-side rendering and Suspense:
+     - Different sections can load independently at their own pace
+     - Loading states can be shown for slow-loading sections without blocking faster ones
+     - Each parallel route can have its own data fetching strategy and loading boundary
 
 6. **Intercepted Routes**
+
+7. **Intercepted Routes**
    - Modal implementation via route interception
    - Photos modal via `@modal/(.)([id])/page.tsx`
    - Maintains parent route context while showing modal overlay
 
-7. **Client Components**
+8. **Client Components**
    - Modal component with keyboard handlers
    - Search input with navigation functionality
    - Autocomplete suggestions for search input
@@ -45,6 +51,6 @@ This project demonstrates modern Next.js App Router features and MDX integration
      - Keyboard navigation (arrow keys, enter, escape)
      - Click selection of suggestions
 
-8. **Slot-Based UI Architecture**
+9. **Slot-Based UI Architecture**
    - Default slot fallbacks
    - Nested parallel routes for complex UI structures
