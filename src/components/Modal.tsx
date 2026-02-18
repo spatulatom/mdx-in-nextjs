@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -9,6 +9,8 @@ interface ModalProps {
 
 export function Modal({ children }: ModalProps) {
   const router = useRouter();
+  const array = [1,2,3,4,5]
+  array.at(-1)
 
   useEffect(() => {
     // Handle escape key
